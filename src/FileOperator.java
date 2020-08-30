@@ -1,6 +1,5 @@
 
-import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.*;
 import java.util.*;
 
 /**
@@ -8,33 +7,19 @@ import java.util.*;
  */
 public class FileOperator {
 
-    /**
-     * Default constructor
-     */
-    public FileOperator() {
+    private FileOperator() {
     }
 
-
-
-    /**
-     *
-     */
-    public static Scanner openFile(String fileName) throws FileNotFoundException {
-        Scanner sc = new Scanner(new File(fileName));
-        return sc;
+    public static BufferedReader openFile(String fileName) throws FileNotFoundException {
+        return new BufferedReader(new FileReader(fileName));
     }
 
-    /**
-     * 
-     */
-    public static void writeFile() {
-        System.out.println("hello there");
+    public static void writeFile(String fileName) throws IOException {
+        FileWriter csvWriter = new FileWriter(fileName);
+
     }
 
-    /**
-     * 
-     */
-    public void appendFile() {
+    public static void appendFile() {
         // TODO implement here
     }
 
