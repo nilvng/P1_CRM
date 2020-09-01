@@ -1,39 +1,22 @@
 
-import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.*;
 import java.util.*;
 
-/**
- * 
- */
 public class FileOperator {
 
-    /**
-     * Default constructor
-     */
     public FileOperator() {
     }
 
-
-
-    /**
-     *
-     */
-    public static Scanner openFile(String fileName) throws FileNotFoundException {
-        Scanner sc = new Scanner(new File(fileName));
-        return sc;
+    public static BufferedReader openFile(String fileName) throws FileNotFoundException {
+        BufferedReader bfr = new BufferedReader(new FileReader(fileName));
+        return bfr;
     }
 
-    /**
-     * 
-     */
-    public static void writeFile() {
-        System.out.println("hello there");
+    public static void writeFile(String filename) throws IOException{
+        FileWriter csvWriter = new FileWriter(filename);
     }
 
-    /**
-     * 
-     */
+
     public void appendFile() {
         // TODO implement here
     }

@@ -1,61 +1,23 @@
-
+import java.util.*;
+import java.io.*;
+import com.opencsv.CSVWriter;
 import com.opencsv.bean.CsvToBeanBuilder;
-
+import com.opencsv.bean.StatefulBeanToCsv;
+import com.opencsv.bean.StatefulBeanToCsvBuilder;
+import com.opencsv.exceptions.CsvDataTypeMismatchException;
+import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.*;
+
 
 /**
  * 
  */
 public class LeadStorage implements Mange {
-
-    /**
-     * Default constructor
-     */
+    private List<Lead> leads;
+    private final String address = "leads.csv";
     public LeadStorage() {
     }
-
-    /**
-     * 
-     */
-    private List<Lead> leads;
-
-    /**
-     * 
-     */
-    private String address = "leads.csv";
-
-
-
-    /**
-     * 
-     */
-    public void viewAll() {
-        // TODO implement here
-    }
-
-    /**
-     * 
-     */
-    public void add() {
-        // TODO implement here
-    }
-
-    /**
-     * @param id
-     */
-    public void update(String id) {
-        // TODO implement here
-    }
-
-    /**
-     * @param id
-     */
-    public void delete(String id) {
-        // TODO implement here
-    }
-
     public void fetchData()  throws IOException {
         leads = new CsvToBeanBuilder<Lead>(new FileReader(address))
                 .withType(Lead.class)
@@ -65,5 +27,23 @@ public class LeadStorage implements Mange {
         System.out.println("Done");
         System.out.println(leads.get(0));
     }
+
+    public void viewAll() {
+        // TODO implement here
+    }
+
+    public void add() {
+        // TODO implement here
+    }
+
+    public void update(String id) {
+        // TODO implement here
+    }
+
+    public void delete(String id) {
+        // TODO implement here
+    }
+
+
 
 }
