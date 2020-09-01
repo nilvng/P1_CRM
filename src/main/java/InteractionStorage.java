@@ -16,11 +16,6 @@ public class InteractionStorage implements Mange {
 
     public InteractionStorage() throws IOException {
         fetchData();
-        for (Interaction i: interactions){
-            System.out.println(i.getId());
-            System.out.println(i.getDate());
-            System.out.println(i.getPotential());
-        }
         System.out.println("fetch done");
     }
 
@@ -47,7 +42,10 @@ public class InteractionStorage implements Mange {
     }
 
     public void viewAll() {
-        // TODO implement here
+        for (Interaction i: interactions){
+            System.out.println(i);
+        }
+
 
     }
 

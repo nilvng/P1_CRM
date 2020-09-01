@@ -1,4 +1,5 @@
 
+import java.text.SimpleDateFormat;
 import java.util.*;
 import com.opencsv.bean.CsvBindByName;
 import com.opencsv.bean.CsvDate;
@@ -58,5 +59,17 @@ public class Interaction {
 
     public void setPotential(String potential) {
         this.potential = potential;
+    }
+
+    @Override
+    public String toString() {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        return "Interaction{" +
+                "id='" + id + '\'' +
+                ", date=" + sdf.format(date) +
+                ", lead='" + lead + '\'' +
+                ", means='" + means + '\'' +
+                ", potential='" + potential + '\'' +
+                '}';
     }
 }

@@ -7,7 +7,7 @@ public class Main {
         InteractionStorage is = null;
         try {
             is = new InteractionStorage();
-//            is.pushData();
+            is.viewAll();
 
         } catch (IOException e) {
             e.printStackTrace();
