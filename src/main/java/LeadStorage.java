@@ -1,4 +1,8 @@
 
+import com.opencsv.bean.CsvToBeanBuilder;
+
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.*;
 
 /**
@@ -15,12 +19,12 @@ public class LeadStorage implements Mange {
     /**
      * 
      */
-    private Lead leads;
+    private List<Lead> leads;
 
     /**
      * 
      */
-    private String address;
+    private String address = "leads.csv";
 
 
 
@@ -50,6 +54,16 @@ public class LeadStorage implements Mange {
      */
     public void delete(String id) {
         // TODO implement here
+    }
+
+    public void fetchData()  throws IOException {
+        leads = new CsvToBeanBuilder<Lead>(new FileReader(address))
+                .withType(Lead.class)
+                .withIgnoreLeadingWhiteSpace(true)
+                .build()
+                .parse();
+        System.out.println("Done");
+        System.out.println(leads.get(0));
     }
 
 }
