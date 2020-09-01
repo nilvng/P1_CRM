@@ -1,1 +1,3 @@
-interaction_001,30 August 2020,lead_001,email,positive
+id,date,lead,means,potential
+interaction_001,30-08-2020,lead_001,email,positive
+interaction_002,01-09-2020,lead_002,email,negative

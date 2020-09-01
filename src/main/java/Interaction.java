@@ -1,24 +1,27 @@
 
 import java.util.*;
+import com.opencsv.bean.CsvBindByName;
+import com.opencsv.bean.CsvDate;
 
 public class Interaction {
 
-
-    public Interaction(String id, String lead, String means, String potential) {
-        this.id = id;
-        this.lead = lead;
-        this.means = means;
-        this.potential = potential;
-    }
-
-    private final String id;
-
+//
+//    public Interaction(String id, String lead, String means, String potential) {
+//        this.id = id;
+//        this.lead = lead;
+//        this.means = means;
+//        this.potential = potential;
+//    }
+    @CsvBindByName
+    private String id;
+    @CsvBindByName
+    @CsvDate ("dd-MM-yyyy")
     private Date date;
-
+    @CsvBindByName
     private String lead;
-
+    @CsvBindByName
     private String means;
-
+    @CsvBindByName
     private String potential;
 
     public String getId() {
