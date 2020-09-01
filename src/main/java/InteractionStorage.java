@@ -1,7 +1,13 @@
 
 import java.io.*;
 import java.util.*;
+
+import com.opencsv.CSVWriter;
 import com.opencsv.bean.CsvToBeanBuilder;
+import com.opencsv.bean.StatefulBeanToCsv;
+import com.opencsv.bean.StatefulBeanToCsvBuilder;
+import com.opencsv.exceptions.CsvDataTypeMismatchException;
+import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
 
 public class InteractionStorage implements Mange {
     private List<Interaction> interactions ;
@@ -10,16 +16,34 @@ public class InteractionStorage implements Mange {
 
     public InteractionStorage() throws IOException {
         fetchData();
+        for (Interaction i: interactions){
+            System.out.println(i.getId());
+            System.out.println(i.getDate());
+            System.out.println(i.getPotential());
+        }
         System.out.println("fetch done");
     }
 
     public void fetchData()  throws IOException {
         interactions = new CsvToBeanBuilder<Interaction>(new FileReader(address))
-                .withType(Interaction.class).build().parse();
-//        System.out.println(interactions.get(0).getId());
-//        System.out.println(interactions.get(1).getLead());
-//        System.out.println(interactions.get(1).getDate());
+                .withType(Interaction.class)
+                .withIgnoreLeadingWhiteSpace(true)
+                .build()
+                .parse();
+    }
 
+    public void pushData() throws IOException{
+        Writer writer = new FileWriter(address);
+        StatefulBeanToCsv<Interaction> beanToCsv = new StatefulBeanToCsvBuilder<Interaction>(writer)
+                .withQuotechar(CSVWriter.NO_QUOTE_CHARACTER)
+                .withSeparator(CSVWriter.DEFAULT_SEPARATOR)
+                .build();
+        try {
+            beanToCsv.write(this.interactions);
+        } catch (CsvDataTypeMismatchException | CsvRequiredFieldEmptyException e) {
+            e.printStackTrace();
+        }
+        writer.close();
     }
 
     public void viewAll() {
