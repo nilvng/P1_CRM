@@ -10,13 +10,13 @@ import java.io.FileReader;
 import java.io.IOException;
 
 
-/**
- * 
- */
 public class LeadStorage implements Mange {
     private List<Lead> leads;
     private final String address = "leads.csv";
-    public LeadStorage() {
+
+    public LeadStorage() throws IOException{
+        fetchData();
+        System.out.println("fetch done");
     }
     public void fetchData()  throws IOException {
         leads = new CsvToBeanBuilder<Lead>(new FileReader(address))
@@ -28,8 +28,11 @@ public class LeadStorage implements Mange {
     }
 
     public void viewAll() {
-        // TODO implement here
+        for (Lead i: leads){
+            System.out.println(i);
+        }
     }
+
 
     public void add() {
         // TODO implement here
