@@ -6,9 +6,17 @@ import java.util.*;
 
 
 public class Lead {
-
-    public Lead() {
+    /*
+    public Lead(String id, String name, Date dob, boolean gender, String phone, String email, String address) {
+        this.id = id;
+        this.name = name;
+        this.dob = dob;
+        this.gender = gender;
+        this.phone = phone;
+        this.email = email;
+        this.address = address;
     }
+    */
 
     @CsvBindByName
     private String id;
@@ -20,11 +28,12 @@ public class Lead {
     @CsvBindByName
     private boolean gender;
     @CsvBindByName
-    private String email;
-    @CsvBindByName
     private String phone;
     @CsvBindByName
+    private String email;
+    @CsvBindByName
     private String address;
+
 
     public String getId() {
         return id;
@@ -33,6 +42,8 @@ public class Lead {
     public void setId(String id) {
         this.id = id;
     }
+
+
 
     public String getName() {
         return name;
@@ -57,6 +68,7 @@ public class Lead {
     public void setGender(boolean gender) {
         this.gender = gender;
     }
+
 
     public String getEmail() {
         return email;
@@ -94,4 +106,5 @@ public class Lead {
                 ", address='" + address + '\'' +
                 '}';
     }
+
 }

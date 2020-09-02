@@ -25,7 +25,6 @@ public class LeadStorage implements Mange {
                 .build()
                 .parse();
         System.out.println("Done");
-        System.out.println(leads.get(0));
     }
 
     public void viewAll() {
