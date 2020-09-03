@@ -33,6 +33,29 @@ public class LeadStorage implements Mange {
         }
     }
 
+    public void AgeStat(){
+        int group1 = 0; //18-30
+        int group2 = 0; //31-50
+        int group3 = 0; //51+
+        for (int i = 0; i < 10; i++){
+            System.out.println(" Person " + (i + 1) + " : " + leads.get(i).getAge());
+        }
+
+        for (int i = 0; i < 10; i++){
+            if(leads.get(i).getAge() <= 30){
+                group1++;
+            } else if(leads.get(i).getAge() > 30 && leads.get(i).getAge() <= 50){
+                group2++;
+            } else if(leads.get(i).getAge() > 50){
+                group3++;
+            }
+        }
+
+        System.out.println("Group 18-30: " + group1);
+        System.out.println("Group 31-50: " + group2);
+        System.out.println("Group 51+: " + group3);
+    }
+
 
     public void add() {
         // TODO implement here

@@ -19,9 +19,7 @@ public class StatsReport {
         // TODO implement here
     }
 
-    /**
-     * 
-     */
+
     public void InteractionByMonth() {
         // TODO implement here
     }

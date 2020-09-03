@@ -1,4 +1,6 @@
-
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import com.opencsv.bean.CsvBindByName;
 import com.opencsv.bean.CsvDate;
 
@@ -92,6 +94,17 @@ public class Lead {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public int getAge(){
+        Date now = new Date();
+
+        int days = (int)(( now.getTime() - this.dob.getTime())
+                / (1000 * 60 * 60 * 24)) ;
+
+        int age = (int)(days/365.25);
+        return age;
+
     }
 
     @Override

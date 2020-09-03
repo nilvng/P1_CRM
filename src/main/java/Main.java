@@ -7,7 +7,7 @@ public class Main {
         LeadStorage ls = null;
         try {
             ls = new LeadStorage();
-            ls.viewAll();
+            ls.AgeStat();
 
         } catch (IOException e) {
             e.printStackTrace();
