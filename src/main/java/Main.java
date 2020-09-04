@@ -1,16 +1,11 @@
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.List;
 
 
 public class Main {
-    public static void main(String[] args) {
-        InteractionStorage is = null;
-        try {
-            is = new InteractionStorage();
-            is.viewAll();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public static void main(String[] args) throws IOException {
+        dataStore<Interaction> interactiondataStore = new dataStore<>(Interaction.class, "interactions.csv");
+        interactiondataStore.viewAll();
     }
 }

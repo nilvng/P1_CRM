@@ -4,7 +4,7 @@ import java.util.*;
 import com.opencsv.bean.CsvBindByName;
 import com.opencsv.bean.CsvDate;
 
-public class Interaction {
+public class Interaction implements Searchable{
 
 //
 //    public Interaction(String id, String lead, String means, String potential) {
@@ -27,6 +27,10 @@ public class Interaction {
 
     public String getId() {
         return id;
+    }
+
+    public void generateId(String id){
+        this.id = "inter_" + id;
     }
 
     public Date getDate() {
