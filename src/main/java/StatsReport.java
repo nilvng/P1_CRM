@@ -1,22 +1,23 @@
 
+import com.opencsv.bean.CsvToBeanBuilder;
+
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.*;
 
-/**
- * 
- */
-public class StatsReport {
 
-    /**
-     * Default constructor
-     */
+public class StatsReport {
     public StatsReport() {
     }
-
-    /**
-     * 
-     */
     public void GroupAge() {
-        // TODO implement here
+        LeadStorage ls = null;
+        try {
+            ls = new LeadStorage();
+            ls.AgeStat();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 
