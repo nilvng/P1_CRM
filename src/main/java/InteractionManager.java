@@ -20,8 +20,14 @@ public class InteractionManager implements Manager{
     @Override
     public void add() throws IOException {
         Interaction interaction = new Interaction();
-        // auto increment id
+//        System.out.println("Enter info of new interaction:");
+//        Scanner console = new Scanner(System.in);
+        interaction.setDate(ValidateUserInput.enterDate("05-06-2020"));
+        interaction.setLead("lead_004");
+        interaction.setMeans("phone");
+        interaction.setPotential("neutral");
         interaction.generateId(interactionCsvUtils.getSize());
+//        System.out.println(interaction);
         // TODO call setter method
         interactionCsvUtils.add(interaction);
     }

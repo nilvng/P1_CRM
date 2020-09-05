@@ -5,16 +5,20 @@ import com.opencsv.bean.CsvBindByName;
 import com.opencsv.bean.CsvDate;
 
 public class Interaction implements Searchable{
+//    public Interaction(String[] input){
+//        this.lead = input[0];
+//        this.means = input[1];
+//        this.potential = input[2];
+//    }
 
+    public Interaction(){}
 //
-//    public Interaction(String id, String lead, String means, String potential) {
-//        this.id = id;
+//    public Interaction(Date date,String lead, String means, String potential) {
+//        this.date = date;
 //        this.lead = lead;
 //        this.means = means;
 //        this.potential = potential;
 //    }
-
-    public Interaction(){}
 
     @CsvBindByName
     private String id;

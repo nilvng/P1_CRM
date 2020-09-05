@@ -1,4 +1,5 @@
 
+import java.io.IOException;
 import java.util.*;
 
 /**
@@ -19,12 +20,15 @@ public class LeadManager implements Manager {
         // TODO implement here
     }
 
-    public void update(String id) {
-        // TODO implement here
+    @Override
+    public void update() throws IOException {
+
     }
 
-    public void delete(String id) {
-        // TODO implement here
+    @Override
+    public void delete() throws IOException {
+
     }
+
 
 }

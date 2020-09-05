@@ -1,3 +1,4 @@
-id,date,lead,means,potential
-interaction_001,30-08-2020,lead_001,email,positive
-interaction_002,01-09-2020,lead_002,email,negative
+DATE,ID,LEAD,MEANS,POTENTIAL
+30-08-2020,inter_001,lead_001,email,positive
+01-09-2020,inter_002,lead_002,email,negative
+05-09-2020,inter_003,lead_001,phone,neutral
