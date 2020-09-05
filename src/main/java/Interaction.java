@@ -13,6 +13,9 @@ public class Interaction implements Searchable{
 //        this.means = means;
 //        this.potential = potential;
 //    }
+
+    public Interaction(){}
+
     @CsvBindByName
     private String id;
     @CsvBindByName
@@ -29,8 +32,15 @@ public class Interaction implements Searchable{
         return id;
     }
 
-    public void generateId(String id){
-        this.id = "inter_" + id;
+    public void generateId(int size){
+        size ++;
+        String prefix = "inter_";
+        if ( size < 10){
+            prefix += "00";
+        } else if (size < 100){
+            prefix += "0";
+        }
+        this.id = prefix + size;
     }
 
     public Date getDate() {
@@ -38,6 +48,7 @@ public class Interaction implements Searchable{
     }
 
     public void setDate(Date date) {
+        // TODO double check input date
         this.date = date;
     }
 
@@ -46,7 +57,7 @@ public class Interaction implements Searchable{
     }
 
     public void setLead(String lead) {
-        this.lead = lead;
+        this.lead = !lead.equals("-") ? lead: this.lead;
     }
 
     public String getMeans() {
@@ -54,7 +65,7 @@ public class Interaction implements Searchable{
     }
 
     public void setMeans(String means) {
-        this.means = means;
+        this.means = !means.equals("-") ? means: this.means;
     }
 
     public String getPotential() {
@@ -62,7 +73,7 @@ public class Interaction implements Searchable{
     }
 
     public void setPotential(String potential) {
-        this.potential = potential;
+        this.potential = !potential.equals("-") ? potential: this.potential;
     }
 
     @Override
