@@ -1,0 +1,11 @@
+DATE,ID,LEAD,MEANS,POTENTIAL
+30-08-2020,inter_001,lead_001,email,positive
+01-09-2020,inter_002,lead_002,email,negative
+05-09-2020,inter_003,lead_001,phone,neutral
+29-04-2020,inter_004,lead_003,email,positive
+01-03-2020,inter_005,lead_004,email,negative
+05-09-2019,inter_006,lead_005,phone,neutral
+29-09-2019,inter_007,lead_003,email,positive
+01-09-2019,inter_008,lead_004,email,positive
+27-06-2020,inter_009,lead_009,Facebook,neutral
+06-09-2010,inter_0010,lead_007,phone,neutral
