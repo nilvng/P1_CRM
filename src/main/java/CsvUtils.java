@@ -47,10 +47,13 @@ public class CsvUtils<T extends Searchable> {
     }
 
     public List<T> getData() {
-        // TODO deep copy?
-        return data;
+        // return a clone of data to preserve data integrity
+        List<T> copyOfData = new ArrayList<>();
+        for (T i : data) {
+            copyOfData.add((T) i.deepCopy());
+        }
+        return copyOfData;
     }
-
     public void add(T t) throws IOException {
         data.add(t);
         saveData();
@@ -67,16 +70,16 @@ public class CsvUtils<T extends Searchable> {
     }
 
     public T findElement(String id) {
-        // TODO return copy of the real object
+        // return a clone of data to preserve data integrity
         for (T i : data) {
             if (i.getId().equals(id)) {
-                return i;
+                return (T) i.deepCopy();
             }
         }
         return null;
     }
 
-    public int findOrder(String id) {
+    public int findIndex(String id) {
         for (int i = 0; i < data.size(); i++) {
             if (data.get(i).getId().equals(id)) {
                 return i;

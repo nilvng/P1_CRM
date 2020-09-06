@@ -1,3 +1,4 @@
-public interface Searchable{
+public interface Searchable<T>{
     public String getId();
+    T deepCopy();
 }
