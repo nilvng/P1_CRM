@@ -9,7 +9,7 @@ import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
 import java.io.*;
 import java.util.*;
 
-public class CsvUtils<T extends Searchable> {
+public class CsvUtils<T extends Searchable<T>> {
     private String address;
     private Class<T> typeParameterClass;
     private List<T> data;
@@ -50,7 +50,7 @@ public class CsvUtils<T extends Searchable> {
         // return a clone of data to preserve data integrity
         List<T> copyOfData = new ArrayList<>();
         for (T i : data) {
-            copyOfData.add((T) i.deepCopy());
+            copyOfData.add(i.deepCopy());
         }
         return copyOfData;
     }
@@ -73,7 +73,7 @@ public class CsvUtils<T extends Searchable> {
         // return a clone of data to preserve data integrity
         for (T i : data) {
             if (i.getId().equals(id)) {
-                return (T) i.deepCopy();
+                return i.deepCopy();
             }
         }
         return null;

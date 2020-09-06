@@ -4,7 +4,7 @@ import java.util.*;
 import com.opencsv.bean.CsvBindByName;
 import com.opencsv.bean.CsvDate;
 
-public class Interaction implements Searchable{
+public class Interaction implements Searchable<Interaction>{
 
     @CsvBindByName
     private String id;
