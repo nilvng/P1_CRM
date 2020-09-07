@@ -1,38 +1,26 @@
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
-
+import java.util.Scanner;
 /**
  * 
  */
 public class InteractionStorage implements Mange {
-
-    /**
-     * Default constructor
-     */
     public InteractionStorage() {
     }
 
-    /**
-     *
-     */
-    private Interaction[] interactions;
 
-    /**
-     *
-     */
+
     private String address;
 
 
-    /**
-     *
-     */
+
     public void viewAll() {
         // TODO implement here
     }
 
-    /**
-     *
-     */
+
     public void add() {
         // TODO implement here
     }

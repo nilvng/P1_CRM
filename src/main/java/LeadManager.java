@@ -8,13 +8,17 @@ import com.opencsv.exceptions.CsvDataTypeMismatchException;
 import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Date;
+import java.text.SimpleDateFormat;
+import java.text.ParseException;
+import java.util.Scanner;
 
 
-public class LeadStorage implements Mange {
-    private List<Lead> leads;
+public class LeadManager implements Mange {
+    public List<Lead> leads;
     private final String address = "leads.csv";
 
-    public LeadStorage() throws IOException{
+    public LeadManager() throws IOException{
         fetchData();
         System.out.println("fetch done");
     }
@@ -33,32 +37,7 @@ public class LeadStorage implements Mange {
         }
     }
 
-    public void AgeStat(){
-        int group1 = 0; //0-10
-        int group2 = 0; //10-20
-        int group3 = 0; //20-60
-        int group4 = 0; //60+
-        for (int i = 0; i < 10; i++){
-            System.out.println(" Person " + (i + 1) + " : " + leads.get(i).getAge());
-        }
 
-        for (int i = 0; i < 10; i++){
-            if(leads.get(i).getAge() <= 10){
-                group1++;
-            } else if(leads.get(i).getAge() > 10 && leads.get(i).getAge() <= 20){
-                group2++;
-            } else if(leads.get(i).getAge() > 20 && leads.get(i).getAge() <= 60){
-                group3++;
-            } else if (leads.get(i).getAge() > 60){
-                group4++;
-            }
-        }
-
-        System.out.println("Group <= 10: " + group1);
-        System.out.println("Group 10-20: " + group2);
-        System.out.println("Group 20-60: " + group3);
-        System.out.println("Group 60+: " + group4);
-    }
 
 
     public void add() {
