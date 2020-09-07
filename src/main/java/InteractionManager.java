@@ -3,11 +3,12 @@ import java.util.List;
 import java.util.Scanner;
 
 public class InteractionManager implements Manager{
-    private final String address = "interactions.csv";
-    private final CsvUtils<Interaction> interactionCsvUtils;
-    public InteractionManager() throws IOException {
-        this.interactionCsvUtils = new CsvUtils<>(Interaction.class, address);
+    private InteractionCsvUtils interactionCsvUtils;
+
+    public InteractionManager() {
+        this.interactionCsvUtils = InteractionCsvUtils.getInstance();
     }
+
 
     @Override
     public void viewAll() {
@@ -18,7 +19,7 @@ public class InteractionManager implements Manager{
     }
 
     @Override
-    public void add() throws IOException {
+    public void add() throws IOException, NullPointerException {
         Interaction interaction = new Interaction();
 //        System.out.println("Enter info of new interaction:");
 //        Scanner console = new Scanner(System.in);
@@ -33,7 +34,7 @@ public class InteractionManager implements Manager{
     }
 
     @Override
-    public void update() throws IOException {
+    public void update() throws IOException, NullPointerException {
         String id = enterId();
         int index = interactionCsvUtils.findIndex(id);
         Interaction interaction = interactionCsvUtils.findElement(id);
@@ -52,7 +53,7 @@ public class InteractionManager implements Manager{
     }
 
     @Override
-    public void delete() throws IOException {
+    public void delete() throws IOException, NullPointerException {
         String id = enterId();
         int index = interactionCsvUtils.findIndex(id);
 

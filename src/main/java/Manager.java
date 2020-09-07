@@ -4,9 +4,9 @@ import java.util.*;
 
 public interface Manager {
 
-    public void viewAll();
-    public void add() throws IOException;
-    public void update() throws IOException;
-    public void delete() throws IOException;
+    public void viewAll() throws NullPointerException;
+    public void add() throws IOException, NullPointerException;
+    public void update() throws IOException, NullPointerException;
+    public void delete() throws IOException, NullPointerException;
 
 }

@@ -10,20 +10,15 @@ import java.io.*;
 import java.util.*;
 
 public class CsvUtils<T extends Searchable<T>> {
-    private String address;
-    private Class<T> typeParameterClass;
-    private List<T> data;
+    protected String address;
+    protected Class<T> typeParameterClass;
+    protected List<T> data;
 
 
-    CsvUtils(Class<T> typeParameterClass, String address) throws IOException {
-        if (address.length() > 4 && address.endsWith(".csv")) {
-            this.typeParameterClass = typeParameterClass;
-            this.address = address;
-            fetchData();
-        } else {
-            // TODO incorrect address
-            System.out.println("incorrect address");
-        }
+    CsvUtils(String address, Class<T> typeParameterClass) throws IOException {
+       this.address = address;
+       this.typeParameterClass = typeParameterClass;
+       fetchData();
     }
 
     void fetchData() throws IOException {

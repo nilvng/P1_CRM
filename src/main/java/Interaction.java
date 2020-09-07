@@ -30,19 +30,11 @@ public class Interaction implements Searchable<Interaction>{
         Interaction that = new Interaction();
         that.id = this.id;
         that.date = this.date;
-        that.lead = this.getLead();
-        that.means = this.getMeans();
-        that.potential = this.getPotential();
+        that.lead = this.lead;
+        that.means = this.means;
+        that.potential = this.potential;
         return that;
     }
-
-//    public Interaction(Interaction that) {
-//        this.id = that.getId();
-//        this.date = that.getDate();
-//        this.lead = that.getLead();
-//        this.means = that.getMeans();
-//        this.potential = that.getPotential();
-//    }
 
     public String getId() {
         return id;
@@ -66,7 +58,7 @@ public class Interaction implements Searchable<Interaction>{
 
     public void setDate(Date date) {
         // TODO double check input date
-        this.date = date;
+        this.date = (date != null ? date: this.date);
     }
 
     public String getLead() {
