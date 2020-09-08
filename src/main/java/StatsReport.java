@@ -9,24 +9,23 @@ public class StatsReport {
     public StatsReport() {
     }
 
-    public void GroupAge() throws IOException{
-        LeadManager leadManager = new LeadManager();
+    public void GroupAge(List<Lead> leads) throws IOException{
         int group1 = 0; //0-10
         int group2 = 0; //10-20
         int group3 = 0; //20-60
         int group4 = 0; //60+
         for (int i = 0; i < 10; i++){
-            System.out.println(" Person " + (i + 1) + " : " + leadManager.leads.get(i).getAge());
+            System.out.println(" Person " + (i + 1) + " : " + leads.get(i).getAge());
         }
 
-        for (int i = 0; i < 10; i++){
-            if(leadManager.leads.get(i).getAge() <= 10){
+        for (int i = 0; i < leads.size(); i++){
+            if(leads.get(i).getAge() <= 10){
                 group1++;
-            } else if(leadManager.leads.get(i).getAge() > 10 && leadManager.leads.get(i).getAge() <= 20){
+            } else if(leads.get(i).getAge() > 10 && leads.get(i).getAge() <= 20){
                 group2++;
-            } else if(leadManager.leads.get(i).getAge() > 20 && leadManager.leads.get(i).getAge() <= 60){
+            } else if(leads.get(i).getAge() > 20 && leads.get(i).getAge() <= 60){
                 group3++;
-            } else if (leadManager.leads.get(i).getAge() > 60){
+            } else if (leads.get(i).getAge() > 60){
                 group4++;
             }
         }
@@ -37,19 +36,8 @@ public class StatsReport {
         System.out.println("Group 60+: " + group4);
     }
 
-
-    public void InteractionByPotential() throws Exception{
+    public Date[] inputStartEndDate() throws ParseException{
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        Date Date1 = sdf.parse("30/07/2020");
-        Date Date2 = sdf.parse("01/09/2020");
-        Date Date3 = sdf.parse("05/09/2020");
-        Interaction inter1 = new Interaction("inter_001", Date1, "lead_001", "email", "positive");
-        Interaction inter2 = new Interaction("inter_002", Date2, "lead_002", "email", "positive");
-        Interaction inter3 = new Interaction("inter_003", Date3, "lead_003", "phone", "neutral");
-        List<Interaction> interactions = new ArrayList<Interaction>();
-        interactions.add(0, inter1);
-        interactions.add(1, inter2);
-        interactions.add(2, inter3);
         Scanner input = new Scanner(System.in);
         System.out.print("Enter the beginning date: ");
         String bDate = input.next();
@@ -57,17 +45,27 @@ public class StatsReport {
         System.out.print("Enter the ending date: ");
         String eDate = input.next();
         Date endDate = sdf.parse(eDate);
+        Date[] dateArray =  {startDate, endDate};
+        return dateArray;
+    }
+
+    public void InteractionByPotential(List<Interaction> interactions) throws Exception{
+        Date[] DateArray = inputStartEndDate();
         int positiveCount = 0;
         int negativeCount = 0;
         int neutralCount = 0;
-        for (int i = 0; i < 3; i++){
-            if (interactions.get(i).getDate().after(startDate) && interactions.get(i).getDate().before(endDate)){
-                if (interactions.get(i).getPotential() == "positive"){
-                    positiveCount++;
-                } else if (interactions.get(i).getPotential() == "negative"){
-                    negativeCount++;
-                } else if(interactions.get(i).getPotential() == "neutral"){
-                    neutralCount++;
+        for (Interaction interaction : interactions) {
+            if (interaction.getDate().after(DateArray[0]) && interaction.getDate().before(DateArray[1])) {
+                switch (interaction.getPotential()) {
+                    case "positive":
+                        positiveCount++;
+                        break;
+                    case "negative":
+                        negativeCount++;
+                        break;
+                    case "neutral":
+                        neutralCount++;
+                        break;
                 }
             }
         }
@@ -77,23 +75,10 @@ public class StatsReport {
     }
 
 
-    public void InteractionByMonth() throws Exception{
+    public void InteractionByMonth(List<Interaction> interactions) throws ParseException{
+        Date[] DateArray = inputStartEndDate();
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        Date Date1 = sdf.parse("30/07/2020");
-        Date Date2 = sdf.parse("01/09/2020");
-        Date Date3 = sdf.parse("05/09/2020");
-        Date Date4 = sdf.parse("05/06/2020");
-        Interaction inter1 = new Interaction("inter_001", Date1, "lead_001", "email", "positive");
-        Interaction inter2 = new Interaction("inter_002", Date2, "lead_002", "email", "positive");
-        Interaction inter3 = new Interaction("inter_003", Date3, "lead_003", "phone", "neutral");
-        Interaction inter4 = new Interaction("inter_004", Date4, "lead_004", "Facebook", "neutral");
-        List<Interaction> interactions = new ArrayList<Interaction>();
-        interactions.add(0, inter1);
-        interactions.add(1, inter2);
-        interactions.add(2, inter3);
-        interactions.add(3, inter4);
-
-        String[] dateString = new String[4];
+        String[] dateString = new String[interactions.size()];
         for (int i = 0; i < dateString.length; i++){
             String extractMY = sdf.format(interactions.get(i).getDate());
             dateString[i] = extractMY.substring(3, 10);

@@ -7,7 +7,6 @@ public class Main{
     public static void main(String[] args) {
         try{
             StatsReport st = new StatsReport();
-            st.InteractionByMonth();
         } catch (Exception e){
             e.printStackTrace();
         }
