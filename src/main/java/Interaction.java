@@ -9,7 +9,7 @@ public class Interaction{
     @CsvBindByName
     private String id;
     @CsvBindByName
-    @CsvDate("yyyy-MM-dd")
+    @CsvDate("dd-MM-yyyy")
     private Date date;
     @CsvBindByName
     private String lead;
@@ -36,6 +36,10 @@ public class Interaction{
         return that;
     }
 
+
+    public String getId() {
+        return id;
+    }
 
     public void generateId(int size) {
         size++;

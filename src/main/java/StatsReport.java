@@ -81,15 +81,20 @@ public class StatsReport {
         Date[] DateArray = inputStartEndDate();
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         String[] dateString = new String[interactions.size()];
-        for (int i = 0; i < dateString.length; i++){
-            String extractMY = sdf.format(interactions.get(i).getDate());
-            dateString[i] = extractMY.substring(3, 10);
+        int trueSize = 0;
+        for (int i = 0; i < interactions.size(); i++){
+            Interaction inter = interactions.get(i);
+            if (inter.getDate().after(DateArray[0]) && inter.getDate().before(DateArray[1])) {
+                String extractMY = sdf.format(inter.getDate());
+                dateString[i] = extractMY.substring(3, 10);
+                trueSize++;
+            }
         }
-        int[] countArray = new int[dateString.length];
+        int[] countArray = new int[trueSize];
         int visited = -1;
-        for(int i = 0; i < dateString.length; i++){
+        for(int i = 0; i < trueSize; i++){
             int count = 1;
-            for(int j = i+1; j < dateString.length; j++){
+            for(int j = i+1; j < trueSize -1; j++){
                 if(dateString[i].equals(dateString[j])){
                     count++;
                     countArray[j] = visited;
@@ -99,7 +104,7 @@ public class StatsReport {
                 countArray[i] = count;
         }
 
-        for(int i = 0; i < countArray.length; i++){
+        for(int i = 0; i < trueSize - 1; i++){
             if(countArray[i] != visited)
                 System.out.println("    " + dateString[i] + "    |    " + countArray[i]);
         }

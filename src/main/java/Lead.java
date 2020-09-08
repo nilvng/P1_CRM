@@ -12,7 +12,7 @@ public class Lead{
     @CsvBindByName
     private Boolean gender;
     @CsvBindByName
-    @CsvDate("dd-MM-yyyy")
+    @CsvDate("yyyy-MM-dd")
     private Date dob;
     @CsvBindByName
     private String email;
@@ -92,7 +92,7 @@ public class Lead{
     }
 
     public void setEmail(String email) {
-        this.email = (email.equals("-") ? email: this.email);
+        this.email = (!email.equals("-") ? email: this.email);
     }
 
     public String getPhone() {
@@ -100,7 +100,7 @@ public class Lead{
     }
 
     public void setPhone(String phone) {
-        this.phone = (phone.equals("-") ? phone: this.phone);
+        this.phone = (!phone.equals("-") ? phone: this.phone);
     }
 
     public String getAddress() {
@@ -108,7 +108,7 @@ public class Lead{
     }
 
     public void setAddress(String address) {
-        this.address = (address.equals("-") ? address: this.address);
+        this.address = (!address.equals("-") ? address: this.address);
     }
 
 
