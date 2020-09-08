@@ -1,77 +1,105 @@
-
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
-/**
- * 
- */
-public class LeadManager implements Manager {
+public class LeadManager implements Manager<Lead>{
+    private static LeadManager INSTANCE;
+    private List<Lead> data;
+    private FileUtils<Lead> fileUtils;
+    static {
+        INSTANCE = new LeadManager();
+    }
 
-    private LeadCsvUtils leadCsvUtils;
-
-    public LeadManager() {
-        this.leadCsvUtils = LeadCsvUtils.getInstance();
+    private LeadManager() {
     }
 
 
+    public static LeadManager getInstance(){
+        return INSTANCE;
+    }
+
     @Override
-    public void viewAll() {
-        List<Lead> data = leadCsvUtils.getData();
-        for (Lead i: data){
-            System.out.println(i);
+    public void setFileUtils(FileUtils<Lead> fileUtils) {
+        this.fileUtils = fileUtils;
+        try {
+            fileUtils.fetchData();
+        } catch (IOException e) {
+            System.out.println("File do not exist");
         }
     }
 
     @Override
-    public void add() throws IOException, NullPointerException {
-        Lead lead = new Lead();
-//        System.out.println("Enter info of new lead:");
-//        Scanner console = new Scanner(System.in);
-        // TODO ask for user input
-//        lead.setDate(ValidateUserInput.enterDate("05-06-2020"));
-//        lead.setLead("lead_007");
-//        lead.setMeans("phone");
-//        lead.setPotential("neutral");
-//        lead.generateId(leadCsvUtils.getSize());
-
-        leadCsvUtils.add(lead);
+    public List<Lead> getData() {
+        List<Lead> copyOfData = new ArrayList<>();
+        for (Lead i : data) {
+            copyOfData.add(i.deepCopy());
+        }
+        return copyOfData;
     }
 
-    @Override
-    public void update() throws IOException, NullPointerException {
-        String id = enterId();
-        int index = leadCsvUtils.findIndex(id);
-        Lead lead = leadCsvUtils.findElement(id);
-        if (lead != null && index != -1) {
-            // TODO ask for user input
-//            lead.setDate(ValidateUserInput.enterDate("27-06-2020"));
-//            lead.setLead("lead_009");
-//            lead.setMeans("Facebook");
-//            lead.setPotential("neutral");
-
-            leadCsvUtils.update(lead, index);
-        } else {
-            System.out.println("invalid id");
+    private void saveToFile(){
+        if ( fileUtils != null){
+            try {
+                fileUtils.saveData();
+            } catch (IOException e) {
+                System.out.println("File do not exist");
+            }
         }
     }
 
     @Override
-    public void delete() throws IOException, NullPointerException {
-        String id = enterId();
-        int index = leadCsvUtils.findIndex(id);
-
-        if ( index != -1) {
-            leadCsvUtils.delete(index);
-        } else {
-            System.out.println("invalid id");
+    public void setData(List<Lead> list) {
+        List<Lead> copyOfData = new ArrayList<>();
+        for (Lead i : list) {
+            copyOfData.add(i.deepCopy());
         }
+        this.data = copyOfData;
     }
 
-    private String enterId(){
-        System.out.println("Enter item id: ");
-        Scanner sc = new Scanner(System.in);
-        return sc.nextLine();
+    @Override
+    public void viewAll() throws NullPointerException {
+        data.forEach(System.out::println);
+    }
+
+    @Override
+    public void add(Lead lead)throws NullPointerException {
+        data.add(lead);
+        saveToFile();
+    }
+
+    @Override
+    public void update(Lead lead, int index) throws NullPointerException {
+        data.set(index, lead);
+        saveToFile();
+    }
+
+    @Override
+    public void delete(int i) throws NullPointerException {
+        data.remove(i);
+        saveToFile();
     }
 
 
+    public Lead findElement(String id) {
+        // return a clone of data to preserve data integrity
+        for (Lead i : data) {
+            if (i.getId().equals(id)) {
+                return i.deepCopy();
+            }
+        }
+        return null;
+    }
+
+    public int findIndex(String id) {
+        for (int i = 0; i < data.size(); i++) {
+            if (data.get(i).getId().equals(id)) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public int getSize(){
+        return data.size();
+    }
 }

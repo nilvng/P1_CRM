@@ -9,27 +9,29 @@ import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
 import java.io.*;
 import java.util.*;
 
-public class CsvUtils<T extends Searchable<T>> {
-    protected String address;
-    protected Class<T> typeParameterClass;
-    protected List<T> data;
+public class CsvUtils<T> implements FileUtils<T>{
+    private final String address;
+    private final Class<T> typeParameterClass;
+    private final Manager<T> manager;
 
-
-    CsvUtils(String address, Class<T> typeParameterClass) throws IOException {
-       this.address = address;
-       this.typeParameterClass = typeParameterClass;
-       fetchData();
+    CsvUtils(String address, Class<T> typeParameterClass, Manager<T> manager) throws IOException {
+        this.address = address;
+        this.typeParameterClass = typeParameterClass;
+        this.manager = manager;
+        manager.setFileUtils(this);
     }
 
-    void fetchData() throws IOException {
-        this.data = new CsvToBeanBuilder<T>(new FileReader(address))
+    public void fetchData() throws IOException {
+        List<T> data = new CsvToBeanBuilder<T>(new FileReader(address))
                 .withType(typeParameterClass)
                 .withIgnoreLeadingWhiteSpace(true)
                 .build()
                 .parse();
+        manager.setData(data);
     }
 
-    void saveData() throws IOException {
+    public void saveData() throws IOException {
+        List<T> data = manager.getData();
         try (Writer writer = new FileWriter(address)) {
             StatefulBeanToCsv<T> beanToCsv = new StatefulBeanToCsvBuilder<T>(writer)
                     .withQuotechar(CSVWriter.NO_QUOTE_CHARACTER)
@@ -41,49 +43,4 @@ public class CsvUtils<T extends Searchable<T>> {
         }
     }
 
-    public List<T> getData() {
-        // return a clone of data to preserve data integrity
-        List<T> copyOfData = new ArrayList<>();
-        for (T i : data) {
-            copyOfData.add(i.deepCopy());
-        }
-        return copyOfData;
-    }
-    public void add(T t) throws IOException {
-        data.add(t);
-        saveData();
-    }
-
-    public void delete(int i) throws IOException {
-        data.remove(i);
-        saveData();
-    }
-
-    public void update(T t, int i) throws IOException {
-        data.set(i, t);
-        saveData();
-    }
-
-    public T findElement(String id) {
-        // return a clone of data to preserve data integrity
-        for (T i : data) {
-            if (i.getId().equals(id)) {
-                return i.deepCopy();
-            }
-        }
-        return null;
-    }
-
-    public int findIndex(String id) {
-        for (int i = 0; i < data.size(); i++) {
-            if (data.get(i).getId().equals(id)) {
-                return i;
-            }
-        }
-        return -1;
-    }
-
-    public int getSize(){
-        return data.size();
-    }
 }

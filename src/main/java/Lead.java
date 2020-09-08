@@ -2,7 +2,7 @@
 import com.opencsv.bean.CsvBindByName;
 import com.opencsv.bean.CsvDate;
 import java.util.*;
-public class Lead implements Searchable<Lead>{
+public class Lead{
 
     public Lead() {
     }
@@ -22,7 +22,6 @@ public class Lead implements Searchable<Lead>{
     @CsvBindByName
     private String address;
 
-    @Override
     public String getId() {
         return this.id;
     }
@@ -51,7 +50,6 @@ public class Lead implements Searchable<Lead>{
         }
         this.id = prefix + size;
     }
-    @Override
     public Lead deepCopy() {
         Lead lead = new Lead();
         lead.id = this.id; // privacy is per class. class can access all private field of instance
