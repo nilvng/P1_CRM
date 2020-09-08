@@ -9,7 +9,7 @@ public class Interaction{
     @CsvBindByName
     private String id;
     @CsvBindByName
-    @CsvDate ("dd-MM-yyyy")
+    @CsvDate("yyyy-MM-dd")
     private Date date;
     @CsvBindByName
     private String lead;
@@ -36,20 +36,20 @@ public class Interaction{
         return that;
     }
 
-    public String getId() {
-        return id;
-    }
 
-    public void generateId(int size){
-        size ++;
+    public void generateId(int size) {
+        size++;
         String prefix = "inter_";
-        if ( size < 10){
+        if (size < 10) {
             prefix += "00";
-        } else
-            if (size < 100){
+        } else if (size < 100) {
             prefix += "0";
         }
         this.id = prefix + size;
+    }
+    public void setId(String id) {
+        this.id = id;
+
     }
 
     public Date getDate() {
@@ -57,8 +57,9 @@ public class Interaction{
     }
 
     public void setDate(Date date) {
-        // TODO double check input date
+      // TODO double check input date
         this.date = (date != null ? date: this.date);
+        this.date = date;
     }
 
     public String getLead() {
@@ -66,7 +67,9 @@ public class Interaction{
     }
 
     public void setLead(String lead) {
+
         this.lead = !lead.equals("-") ? lead: this.lead;
+        this.lead = lead;
     }
 
     public String getMeans() {
@@ -75,6 +78,7 @@ public class Interaction{
 
     public void setMeans(String means) {
         this.means = !means.equals("-") ? means: this.means;
+        this.means = means;
     }
 
     public String getPotential() {
@@ -83,6 +87,7 @@ public class Interaction{
 
     public void setPotential(String potential) {
         this.potential = !potential.equals("-") ? potential: this.potential;
+        this.potential = potential;
     }
 
     @Override
@@ -90,7 +95,7 @@ public class Interaction{
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         return "Interaction{" +
                 "id='" + id + '\'' +
-                ", date=" + (date != null? sdf.format(date): "") +
+                ", date=" + sdf.format(date) +
                 ", lead='" + lead + '\'' +
                 ", means='" + means + '\'' +
                 ", potential='" + potential + '\'' +
