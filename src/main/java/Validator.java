@@ -2,8 +2,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class ValidateUserInput {
-    private ValidateUserInput(){}
+public class Validator {
+    private Validator(){}
     public static boolean validateEmail(){
         return false;
     }

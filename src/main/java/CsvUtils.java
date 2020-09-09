@@ -9,12 +9,12 @@ import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
 import java.io.*;
 import java.util.*;
 
-public class CsvUtils<T> implements FileUtils<T>{
+public class CsvUtils<T> implements FileUtils{
     private final String address;
     private final Class<T> typeParameterClass;
-    private final Manager<T> manager;
+    private final Savable<T> manager;
 
-    CsvUtils(String address, Class<T> typeParameterClass, Manager<T> manager) throws IOException {
+    CsvUtils(String address, Class<T> typeParameterClass, Savable<T> manager) throws IOException {
         this.address = address;
         this.typeParameterClass = typeParameterClass;
         this.manager = manager;

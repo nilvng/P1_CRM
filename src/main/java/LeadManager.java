@@ -3,29 +3,43 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LeadManager implements Manager<Lead>{
+public class LeadManager implements Manager, Savable<Lead>{
     private static LeadManager INSTANCE;
     private List<Lead> data;
-    private FileUtils<Lead> fileUtils;
-    static {
-        INSTANCE = new LeadManager();
-    }
+    private FileUtils fileUtils;
+    private LeadView leadView;
 
     private LeadManager() {
     }
 
-
     public static LeadManager getInstance(){
+        if (INSTANCE == null){
+            INSTANCE = new LeadManager();
+        }
         return INSTANCE;
     }
 
+    public void setLeadView(LeadView leadView) {
+        this.leadView = leadView;
+    }
+
     @Override
-    public void setFileUtils(FileUtils<Lead> fileUtils) {
+    public void setFileUtils(FileUtils fileUtils) {
         this.fileUtils = fileUtils;
         try {
             fileUtils.fetchData();
         } catch (IOException e) {
-            System.out.println("File do not exist");
+            System.out.println("File not found");
+        }
+    }
+
+    public void saveToFile(){
+        if ( fileUtils != null){
+            try {
+                fileUtils.saveData();
+            } catch (IOException e) {
+                System.out.println("File not found");
+            }
         }
     }
 
@@ -38,16 +52,6 @@ public class LeadManager implements Manager<Lead>{
         return copyOfData;
     }
 
-    private void saveToFile(){
-        if ( fileUtils != null){
-            try {
-                fileUtils.saveData();
-            } catch (IOException e) {
-                System.out.println("File do not exist");
-            }
-        }
-    }
-
     @Override
     public void setData(List<Lead> list) {
         List<Lead> copyOfData = new ArrayList<>();
@@ -58,24 +62,32 @@ public class LeadManager implements Manager<Lead>{
     }
 
     @Override
-    public void viewAll() throws NullPointerException {
-        data.forEach(System.out::println);
+    public void viewAll(){
+        this.data.forEach(System.out::println);
     }
 
     @Override
-    public void add(Lead lead)throws NullPointerException {
+    public void add() {
+        Lead lead = new Lead();
+        leadView.enterLead(lead);
+        lead.generateId(data.size());
         data.add(lead);
         saveToFile();
     }
 
     @Override
-    public void update(Lead lead, int index) throws NullPointerException {
-        data.set(index, lead);
+    public void update() throws  NullPointerException {
+        String id = leadView.enterId();
+        Lead lead = this.findElement(id);
+        int i = this.findIndex(id);
+        data.set(i, lead);
         saveToFile();
     }
 
     @Override
-    public void delete(int i) throws NullPointerException {
+    public void delete() throws NullPointerException {
+        String id = leadView.enterId();
+        int i = this.findIndex(id);
         data.remove(i);
         saveToFile();
     }
@@ -85,10 +97,10 @@ public class LeadManager implements Manager<Lead>{
         // return a clone of data to preserve data integrity
         for (Lead i : data) {
             if (i.getId().equals(id)) {
-                return i.deepCopy();
+                return i;
             }
         }
-        return null;
+        return null; // TODO handle null here
     }
 
     public int findIndex(String id) {
@@ -100,8 +112,5 @@ public class LeadManager implements Manager<Lead>{
         return -1;
     }
 
-    public int getSize(){
-        return data.size();
-    }
 }
 

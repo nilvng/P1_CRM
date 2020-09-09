@@ -3,18 +3,19 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class InteractionManager implements Manager<Interaction> {
-    private static final InteractionManager INSTANCE;
+public class InteractionManager implements Manager, Savable<Interaction> {
+    private static InteractionManager INSTANCE;
     private List<Interaction> data;
-    private FileUtils<Interaction> fileUtils;
-    static {
-        INSTANCE = new InteractionManager();
-    }
+    private FileUtils fileUtils;
+    private InteractionView interactionView;
 
     private InteractionManager() {
     }
 
     public static InteractionManager getInstance(){
+        if (INSTANCE == null){
+            INSTANCE = new InteractionManager();
+        }
         return INSTANCE;
     }
 
@@ -27,17 +28,21 @@ public class InteractionManager implements Manager<Interaction> {
         return copyOfData;
     }
 
-    private void saveToFile(){
+    public void saveToFile(){
         if ( fileUtils != null){
             try {
                 fileUtils.saveData();
             } catch (IOException e) {
-                System.out.println("File do not exist");
+                System.out.println("File not found");
             }
         }
     }
 
-    public void setFileUtils(FileUtils<Interaction> fileUtils) {
+    public void setInteractionView(InteractionView interactionView) {
+        this.interactionView = interactionView;
+    }
+
+    public void setFileUtils(FileUtils fileUtils) {
         this.fileUtils = fileUtils;
         try {
             fileUtils.fetchData();
@@ -52,50 +57,52 @@ public class InteractionManager implements Manager<Interaction> {
         }
         this.data = copyOfData;
     }
-
     @Override
-    public void viewAll() throws NullPointerException {
-        data.forEach(System.out::println);
+    public void viewAll(){
+        this.data.forEach(System.out::println);
     }
 
     @Override
-    public void add(Interaction interaction) throws NullPointerException {
+    public void add() {
+        Interaction interaction = new Interaction();
+        interactionView.enterInteraction(interaction);
+        interaction.generateId(data.size());
         data.add(interaction);
         saveToFile();
     }
 
     @Override
-    public void update(Interaction interaction, int index) throws  NullPointerException {
-        data.set(index, interaction);
+    public void update() throws  NullPointerException {
+        String id = interactionView.enterId();
+        Interaction interaction = this.findElement(id);
+        int i = this.findIndex(id);
+        data.set(i, interaction);
         saveToFile();
     }
 
     @Override
-    public void delete(int i) throws NullPointerException {
+    public void delete() throws NullPointerException {
+        String id = interactionView.enterId();
+        int i = this.findIndex(id);
         data.remove(i);
         saveToFile();
     }
 
-    public Interaction findElement(String id) {
-        // return a clone of data to preserve data integrity
+    Interaction findElement(String id) {
         for (Interaction i : data) {
             if (i.getId().equals(id)) {
-                return i.deepCopy();
+                return i;
             }
         }
-        return null;
+        return null; // TODO handle null
     }
 
-    public int findIndex(String id) {
+    int findIndex(String id) {
         for (int i = 0; i < data.size(); i++) {
             if (data.get(i).getId().equals(id)) {
                 return i;
             }
         }
         return -1;
-    }
-
-    public int getSize(){
-        return data.size();
     }
 }
