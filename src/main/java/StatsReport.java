@@ -103,10 +103,51 @@ public class StatsReport {
             if(countArray[i] != visited)
                 countArray[i] = count;
         }
-
         for(int i = 0; i < trueSize - 1; i++){
+            String monthstr;
+            monthstr = dateString[i].substring(0, 2);
+            String YearExtract = dateString[i].substring(3);
+            String MonthExtract = "";
+            switch (monthstr){
+                case "01":
+                    MonthExtract = "Jan";
+                    break;
+                case "02":
+                    MonthExtract = "Feb";
+                    break;
+                case "03":
+                    MonthExtract = "Mar";
+                    break;
+                case "04":
+                    MonthExtract = "Apr";
+                    break;
+                case "05":
+                    MonthExtract = "May";
+                    break;
+                case "06":
+                    MonthExtract = "Jun";
+                    break;
+                case "07":
+                    MonthExtract = "Junl";
+                    break;
+                case "08":
+                    MonthExtract = "Aug";
+                    break;
+                case "09":
+                    MonthExtract = "Sep";
+                    break;
+                case "10":
+                    MonthExtract = "Oct";
+                    break;
+                case "11":
+                    MonthExtract = "Nov";
+                    break;
+                case "12":
+                    MonthExtract = "Dec";
+                    break;
+            }
             if(countArray[i] != visited)
-                System.out.println("    " + dateString[i] + "    |    " + countArray[i]);
+                System.out.println("    " + MonthExtract + " " + YearExtract + "    |    " + countArray[i]);
         }
     }
 
