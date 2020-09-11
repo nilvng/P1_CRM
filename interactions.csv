@@ -9,8 +9,7 @@ DATE,ID,LEAD,MEANS,POTENTIAL
 2019-09-01,inter_008,lead_004,email,positive
 2020-09-10,inter_009,lead_009,Facebook,neutral
 2010-06-27,inter_0010,lead_007,phone,neutral
-2020-09-01,inter_013,lead_001,phone,negative
 2020-09-01,inter_014,lead_001,phone,negative
 2020-09-01,inter_015,lead_001,phone,neutral
-2020-09-08,inter_016,lead_001,phone,neutral
-2020-01-01,inter_018,lead_004,email,neutral
+2020-08-28,inter_016,lead_002,phone,positive
+2010-01-01,inter_017,lead_007,email,positive

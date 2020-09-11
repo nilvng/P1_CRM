@@ -11,11 +11,9 @@ public class StatsReport {
     public StatsReport() {
     }
 
-    public void menu(){
-        Scanner console = new Scanner(System.in);
+    public void menu(Scanner console){
         InteractionManager interactionManager= InteractionManager.getInstance();
         LeadManager leadManager = LeadManager.getInstance();
-        System.out.println("the program begins!");
         System.out.println("*************************************");
         System.out.println("Report options:");
         System.out.println("1. Reporting Lead by group age");
@@ -121,21 +119,16 @@ public class StatsReport {
         SimpleDateFormat sdf = new SimpleDateFormat("MMM-yyyy");
         String[] dateString = new String[interactions.size()];
         int trueSize = 0;
-        for (int i = 0; i < interactions.size(); i++){
-            Interaction inter = interactions.get(i);
-            if (inter.getDate().after(DateArray[0]) && inter.getDate().before(DateArray[1])) {
-                String extractMY = sdf.format(inter.getDate());
-                dateString[i] = extractMY;
+        for (Interaction interaction : interactions) {
+            Date date = interaction.getDate();
+            if (date.after(DateArray[0]) && date.before(DateArray[1])) {
+                dateString[trueSize]  = sdf.format(date);
                 trueSize++;
             }
         }
 
         int[] countArray = new int[trueSize];
         int visited = -1;
-        for (String i: dateString
-             ) {
-            System.out.println(i);
-        }
         for(int i = 0; i < trueSize-1; i++){
             int count = 1;
             for(int j = i+1; j < trueSize -1; j++){
