@@ -10,9 +10,9 @@ import java.io.*;
 import java.util.*;
 
 public class CsvUtils<T> implements FileUtils{
-    private final String address;
-    private final Class<T> typeParameterClass;
-    private final Savable<T> manager;
+    private String address;
+    private Class<T> typeParameterClass;
+    private Savable<T> manager;
 
     CsvUtils(String address, Class<T> typeParameterClass, Savable<T> manager) throws IOException {
         this.address = address;
@@ -43,4 +43,27 @@ public class CsvUtils<T> implements FileUtils{
         }
     }
 
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public Class<T> getTypeParameterClass() {
+        return typeParameterClass;
+    }
+
+    public void setTypeParameterClass(Class<T> typeParameterClass) {
+        this.typeParameterClass = typeParameterClass;
+    }
+
+    public Savable<T> getManager() {
+        return manager;
+    }
+
+    public void setManager(Savable<T> manager) {
+        this.manager = manager;
+    }
 }

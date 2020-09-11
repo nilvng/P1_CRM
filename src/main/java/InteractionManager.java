@@ -65,7 +65,8 @@ public class InteractionManager implements Manager, Savable<Interaction> {
     @Override
     public void add() {
         Interaction interaction = new Interaction();
-        interactionView.enterInteraction(interaction);
+//        interactionView.enterInteraction(interaction);
+        interaction.createFromConsole();
         interaction.generateId(data.size());
         data.add(interaction);
         saveToFile();
@@ -104,5 +105,9 @@ public class InteractionManager implements Manager, Savable<Interaction> {
             }
         }
         return -1;
+    }
+
+    public FileUtils getFileUtils() {
+        return fileUtils;
     }
 }

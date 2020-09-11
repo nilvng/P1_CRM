@@ -12,9 +12,13 @@ public class InteractionView {
     }
 
     public void enterInteraction(Interaction interaction){
-        interaction.setDate(Validator.enterDate("05-06-2020"));
+        System.out.println("Enter interaction's date:");
+//        interaction.setDate(Validator.enterDate("05-06-2020"));
+        System.out.println("Enter id of the lead who participates in this interaction:");
         interaction.setLead("lead_007");
+        System.out.println("Enter interaction's mean:");
         interaction.setMeans("phone");
+        System.out.println("Enter interaction's potential:");
         interaction.setPotential("neutral");
     }
 }

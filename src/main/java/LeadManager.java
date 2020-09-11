@@ -19,10 +19,6 @@ public class LeadManager implements Manager, Savable<Lead>{
         return INSTANCE;
     }
 
-    public void setLeadView(LeadView leadView) {
-        this.leadView = leadView;
-    }
-
     @Override
     public void setFileUtils(FileUtils fileUtils) {
         this.fileUtils = fileUtils;
@@ -110,6 +106,17 @@ public class LeadManager implements Manager, Savable<Lead>{
             }
         }
         return -1;
+    }
+
+    public FileUtils getFileUtils() {
+        return fileUtils;
+    }
+
+    public LeadView getLeadView() {
+        return leadView;
+    }
+    public void setLeadView(LeadView leadView) {
+        this.leadView = leadView;
     }
 
 }

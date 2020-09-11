@@ -9,9 +9,8 @@
         <module name="P1_CRM" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="dependencies" target="1.5" />
-      <module name="P1_CRM" target="1.8" />
+    <bytecodeTargetLevel target="14">
+      <module name="P1_CRM" target="14" />
     </bytecodeTargetLevel>
   </component>
 </project>

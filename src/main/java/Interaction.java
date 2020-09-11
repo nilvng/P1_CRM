@@ -9,7 +9,7 @@ public class Interaction{
     @CsvBindByName
     private String id;
     @CsvBindByName
-    @CsvDate("dd-MM-yyyy")
+    @CsvDate("yyyy-MM-dd")
     private Date date;
     @CsvBindByName
     private String lead;
@@ -18,12 +18,34 @@ public class Interaction{
     @CsvBindByName
     private String potential;
 
+    private static List<String> validPotential = new ArrayList<>(Arrays.asList("positive","negative","neutral"));
+    private static List<String> validMeans = new ArrayList<>(Arrays.asList("phone", "email", "Facebook"));
     public Interaction(){}
 
-    public Interaction(String[] input){
-        this.lead = input[0];
-        this.means = input[1];
-        this.potential = input[2];
+    public void createFromConsole(){
+        System.out.print("Create new interaction by following this format:");
+        System.out.println("[date];[lead];[means];[potential]");
+        Scanner console = new Scanner(System.in);
+        String[] input = console.nextLine().split(";");
+        this.date = Validator.enterDate(input[0]);
+        if (Validator.DoesLeadExist(input[1])) {
+            this.setLead(input[1]);
+        }
+        if (validMeans.contains(input[2].trim().toLowerCase())) {
+            this.setMeans(input[2]);
+        }
+        if (validPotential.contains(input[3].trim().toLowerCase())) {
+            this.setPotential(input[3]);
+        }
+        System.out.println(this);
+    }
+
+    public void editFromConsole(){
+        System.out.println("You will edit this interaction: ");
+        System.out.println(this);
+        System.out.println("Edit the interaction by following this format: (leave '-' if you don't want to change that field )");
+        System.out.println("[date];[lead];[means];[potential]");
+
     }
 
     public Interaction deepCopy(){
@@ -51,10 +73,6 @@ public class Interaction{
         }
         this.id = prefix + size;
     }
-    public void setId(String id) {
-        this.id = id;
-
-    }
 
     public Date getDate() {
         return date;
@@ -62,7 +80,7 @@ public class Interaction{
 
     public void setDate(Date date) {
       // TODO double check input date
-        this.date = (date != null ? date: this.date);
+//        this.date = (date != null ? date: this.date);
         this.date = date;
     }
 
@@ -71,8 +89,7 @@ public class Interaction{
     }
 
     public void setLead(String lead) {
-
-        this.lead = !lead.equals("-") ? lead: this.lead;
+//        this.lead = !lead.equals("-") ? lead: this.lead;
         this.lead = lead;
     }
 
@@ -81,8 +98,8 @@ public class Interaction{
     }
 
     public void setMeans(String means) {
-        this.means = !means.equals("-") ? means: this.means;
-        this.means = means;
+//        this.means = !means.equals("-") ? means: this.means;
+            this.means = means;
     }
 
     public String getPotential() {
@@ -90,8 +107,8 @@ public class Interaction{
     }
 
     public void setPotential(String potential) {
-        this.potential = !potential.equals("-") ? potential: this.potential;
-        this.potential = potential;
+//        this.potential = !potential.equals("-") ? potential: this.potential;
+            this.potential = potential;
     }
 
     @Override
