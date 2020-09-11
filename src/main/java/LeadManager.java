@@ -66,7 +66,7 @@ public class LeadManager implements Manager, Savable<Lead>{
     public void add() {
         Lead lead = new Lead();
         leadView.enterLead(lead);
-        lead.generateId(data.size());
+        lead.generateId(lastItemId());
         data.add(lead);
         saveToFile();
     }
@@ -106,6 +106,12 @@ public class LeadManager implements Manager, Savable<Lead>{
             }
         }
         return -1;
+    }
+
+    public int lastItemId(){
+        Lead lead = data.get(data.size() - 1);
+        String currentId = lead.getId();
+        return Integer.parseInt(currentId.substring(currentId.length() - 3));
     }
 
     public FileUtils getFileUtils() {

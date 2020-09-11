@@ -67,7 +67,8 @@ public class InteractionManager implements Manager, Savable<Interaction> {
         Interaction interaction = new Interaction();
 //        interactionView.enterInteraction(interaction);
         interaction.createFromConsole();
-        interaction.generateId(data.size());
+        interaction.generateId(lastItemId());
+        System.out.println(interaction);
         data.add(interaction);
         saveToFile();
     }
@@ -105,6 +106,12 @@ public class InteractionManager implements Manager, Savable<Interaction> {
             }
         }
         return -1;
+    }
+
+    public int lastItemId(){
+        Interaction i = data.get(data.size() - 1);
+        String currentId = i.getId();
+        return Integer.parseInt(currentId.substring(currentId.length() - 3));
     }
 
     public FileUtils getFileUtils() {

@@ -11,7 +11,36 @@ public class StatsReport {
     public StatsReport() {
     }
 
-    public void GroupAge(List<Lead> leads) throws IOException{
+    public void menu(){
+        Scanner console = new Scanner(System.in);
+        InteractionManager interactionManager= InteractionManager.getInstance();
+        LeadManager leadManager = LeadManager.getInstance();
+        System.out.println("the program begins!");
+        System.out.println("*************************************");
+        System.out.println("Report options:");
+        System.out.println("1. Reporting Lead by group age");
+        System.out.println("2. Reporting interactions by month");
+        System.out.println("3. Reporting interaction by potential");
+        System.out.println("*************************************");
+        System.out.println("Enter your choice (from 1 to 3):");
+        String answer = console.nextLine();
+        switch (answer) {
+            case "1":
+                this.GroupAge(leadManager.getData());
+                break;
+            case "2":
+                this.InteractionByMonth(interactionManager.getData());
+                break;
+            case "3":
+                this.InteractionByPotential(interactionManager.getData());
+                break;
+            default:
+                System.out.println("Invalid option");
+                break;
+        }
+    }
+
+    public void GroupAge(List<Lead> leads){
         int group1 = 0; //0-10
         int group2 = 0; //10-20
         int group3 = 0; //20-60
@@ -38,20 +67,30 @@ public class StatsReport {
         System.out.println("Group 60+: " + group4);
     }
 
-    public Date[] inputStartEndDate() throws ParseException{
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+    public Date[] inputStartEndDate(){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Scanner input = new Scanner(System.in);
         System.out.print("Enter the beginning date: ");
-        String bDate = input.next();
-        Date startDate = sdf.parse(bDate);
+        String bDate = input.nextLine();
+        Date startDate = null;
+        try {
+            startDate = sdf.parse(bDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         System.out.print("Enter the ending date: ");
-        String eDate = input.next();
-        Date endDate = sdf.parse(eDate);
+        String eDate = input.nextLine();
+        Date endDate = null;
+        try {
+            endDate = sdf.parse(eDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         Date[] dateArray =  {startDate, endDate};
         return dateArray;
     }
 
-    public void InteractionByPotential(List<Interaction> interactions) throws Exception{
+    public void InteractionByPotential(List<Interaction> interactions){
         Date[] DateArray = inputStartEndDate();
         int positiveCount = 0;
         int negativeCount = 0;
@@ -77,22 +116,27 @@ public class StatsReport {
     }
 
 
-    public void InteractionByMonth(List<Interaction> interactions) throws ParseException{
+    public void InteractionByMonth(List<Interaction> interactions){
         Date[] DateArray = inputStartEndDate();
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat sdf = new SimpleDateFormat("MMM-yyyy");
         String[] dateString = new String[interactions.size()];
         int trueSize = 0;
         for (int i = 0; i < interactions.size(); i++){
             Interaction inter = interactions.get(i);
             if (inter.getDate().after(DateArray[0]) && inter.getDate().before(DateArray[1])) {
                 String extractMY = sdf.format(inter.getDate());
-                dateString[i] = extractMY.substring(3, 10);
+                dateString[i] = extractMY;
                 trueSize++;
             }
         }
+
         int[] countArray = new int[trueSize];
         int visited = -1;
-        for(int i = 0; i < trueSize; i++){
+        for (String i: dateString
+             ) {
+            System.out.println(i);
+        }
+        for(int i = 0; i < trueSize-1; i++){
             int count = 1;
             for(int j = i+1; j < trueSize -1; j++){
                 if(dateString[i].equals(dateString[j])){

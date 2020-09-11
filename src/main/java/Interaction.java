@@ -20,25 +20,86 @@ public class Interaction{
 
     private static List<String> validPotential = new ArrayList<>(Arrays.asList("positive","negative","neutral"));
     private static List<String> validMeans = new ArrayList<>(Arrays.asList("phone", "email", "Facebook"));
-    public Interaction(){}
+
+
+
+//    public String getInput(String mess, String validateRule, Scanner console){
+//        boolean isInValid = false;
+//        do {
+//            System.out.println("Enter interaction's date:");
+//            String input = console.nextLine();
+//            try {
+//                this.date = Validator.validateDate(date);
+//            } catch (InvalidInputException e) {
+//                System.out.println(e.getMessage());
+//                isInValid = true;
+//            }
+//        } while (isInValid);
+//    public void createObject(){
+//
+//        Interaction interaction = new Interaction();
+//        interaction.setLead(getInput());
+//
+//    }
+//
+//        return input;
+//    }
+//
 
     public void createFromConsole(){
-        System.out.print("Create new interaction by following this format:");
-        System.out.println("[date];[lead];[means];[potential]");
+//        System.out.println("Create new interaction by following this format:");
+//        System.out.println("[date];[lead];[means];[potential]");
+//        String[] input = console.nextLine().split(";");
         Scanner console = new Scanner(System.in);
-        String[] input = console.nextLine().split(";");
-        this.date = Validator.enterDate(input[0]);
-        if (Validator.DoesLeadExist(input[1])) {
-            this.setLead(input[1]);
+        boolean isInValid = false;
+
+        do {
+            isInValid = false;
+            System.out.println("Enter id of the lead who participates in this interaction:");
+            String id = console.nextLine();
+            try {
+                this.lead = Validator.validateLeadId(id);
+            } catch (InvalidInputException e) {
+                System.out.println(e.getMessage());
+                isInValid = true;
+            }
+        } while (isInValid);
+
+        do {
+            isInValid = false;
+            System.out.println("Enter interaction's mean:");
+
+            String means = console.nextLine();
+            if (validMeans.contains(means.trim().toLowerCase())) {
+                this.means = means;
+            } else{
+                isInValid = true;
+                System.out.println();
+            }
+        } while (isInValid);
+
+        do {
+            isInValid = false;
+            System.out.println("Enter interaction's potential:");
+
+            String potential = console.nextLine();
+            if (validPotential.contains(potential.trim().toLowerCase())) {
+                this.potential = potential;
+            } else{
+                isInValid = true;
+            }
+        } while (isInValid);
+
+//        this.date = Validator.enterDate(input[0]);
+//        if (Validator.DoesLeadExist(input[1])) {
+//            this.setLead(input[1]);
+//        }
+//        if (validMeans.contains(input[2].trim().toLowerCase())) {
+//            this.setMeans(input[2]);
+//        }
+//        if (validPotential.contains(input[3].trim().toLowerCase())) {
+//            this.setPotential(input[3]);
         }
-        if (validMeans.contains(input[2].trim().toLowerCase())) {
-            this.setMeans(input[2]);
-        }
-        if (validPotential.contains(input[3].trim().toLowerCase())) {
-            this.setPotential(input[3]);
-        }
-        System.out.println(this);
-    }
 
     public void editFromConsole(){
         System.out.println("You will edit this interaction: ");
