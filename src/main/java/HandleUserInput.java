@@ -3,6 +3,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class HandleUserInput {
     private Scanner console = new Scanner(System.in);
@@ -98,16 +100,66 @@ public class HandleUserInput {
         return id;
     }
 
-    public String enterPhone(){
-        return "";
+    public String enterPhone(String message, boolean leaveBlank){
+        LeadManager leadManager = LeadManager.getInstance();
+        String phone;
+        do {
+            isInvalid = false;
+            phone = getInput(message,leaveBlank);
+            if(input.equals("") && leaveBlank) {
+                break;
+            }
+            if (phone.length() == 10 && phone.charAt(0) == '0'){
+                isInvalid = true;
+            }
+
+        } while (isInvalid);
+
+        return phone;
     }
 
-    public String enterEmail(){
-        return "";
+    public String enterEmail(String message, boolean leaveBlank){
+        LeadManager leadManager = LeadManager.getInstance();
+        String email;
+        String regex = "^\\w+[a-zA-Z0-9]*@\\w+[a-z].\\w+[a-z]$";
+        do {
+            isInvalid = false;
+            email = getInput(message,leaveBlank);
+            if(input.equals("") && leaveBlank) {
+                break;
+            }
+            Pattern pattern = Pattern.compile(regex);
+            Matcher matcher = pattern.matcher(email);
+            if (matcher.find()){
+                isInvalid = true;
+            }
+
+        } while (isInvalid);
+
+        return email;
     }
 
-    public String enterGender(){
-        return "";
+    public boolean enterGender(String message, boolean leaveBlank){
+        LeadManager leadManager = LeadManager.getInstance();
+        String genderString;
+        boolean gender = false;
+        do {
+            isInvalid = false;
+            genderString = getInput(message,leaveBlank);
+            if(input.equals("") && leaveBlank) {
+                break;
+            }
+            if (genderString.equals("M")){
+                isInvalid = true;
+                gender = true;
+            } else if (genderString.equals("F")){
+                isInvalid = true;
+                gender = false;
+            } else
+                isInvalid = false;
+        } while (isInvalid);
+
+        return gender;
     }
 }
 
