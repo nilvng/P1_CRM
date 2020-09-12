@@ -7,7 +7,7 @@ public class LeadManager implements Manager, Savable<Lead>{
     private static LeadManager INSTANCE;
     private List<Lead> data;
     private FileUtils fileUtils;
-    private LeadView leadView;
+    private HandleInput handler = new HandleInput();
 
     private LeadManager() {
     }
@@ -65,26 +65,45 @@ public class LeadManager implements Manager, Savable<Lead>{
     @Override
     public void add() {
         Lead lead = new Lead();
-        leadView.enterLead(lead);
+        lead.setName(handler.enterString("lead's name:", false));
+        lead.setDob(handler.enterDate("lead's dob:", false));
+        lead.setGender(handler.enterGender("lead's gender (F for Female and M for Male):", false));
+        lead.setPhone(handler.enterPhone("lead's phone number:", false));
+        lead.setEmail(handler.enterEmail("lead's email", false));
+        lead.setAddress(handler.enterString("lead's address:", false));
         lead.generateId(lastItemId());
         data.add(lead);
+        System.out.println("Added! " + lead);
         saveToFile();
     }
 
     @Override
     public void update() throws  NullPointerException {
-        String id = leadView.enterId();
+        String id = handler.enterLeadId("lead's id", false);
         Lead lead = this.findElement(id);
         int i = this.findIndex(id);
+        lead.setName(handler.enterString("lead's name:", true));
+        lead.setDob(handler.enterDate("lead's dob:", true));
+        lead.setGender(handler.enterGender("lead's gender (F for Female and M for Male):", true));
+        lead.setPhone(handler.enterPhone("lead's phone number:", true));
+        lead.setEmail(handler.enterEmail("lead's email", true));
+        lead.setAddress(handler.enterString("lead's address:", true));
         data.set(i, lead);
+        System.out.println("Updated!\n" + lead);
         saveToFile();
     }
 
     @Override
     public void delete() throws NullPointerException {
-        String id = leadView.enterId();
+        InteractionManager interactionManager = InteractionManager.getInstance();
+        String id = handler.enterLeadId("lead's id", false);
         int i = this.findIndex(id);
-        data.remove(i);
+        if (!interactionManager.findInterByLeadId(id)){
+            data.remove(i);
+            System.out.println("deleted!");
+        } else {
+            System.out.println("Cannot delete this lead because they have been in one of the interactions");
+        }
         saveToFile();
     }
 
@@ -96,7 +115,7 @@ public class LeadManager implements Manager, Savable<Lead>{
                 return i;
             }
         }
-        return null; // TODO handle null here
+        return null;
     }
 
     public int findIndex(String id) {
@@ -118,12 +137,12 @@ public class LeadManager implements Manager, Savable<Lead>{
         return fileUtils;
     }
 
-    public LeadView getLeadView() {
-        return leadView;
-    }
-    public void setLeadView(LeadView leadView) {
-        this.leadView = leadView;
+    public HandleInput getHandler() {
+        return handler;
     }
 
+    public void setHandler(HandleInput handler) {
+        this.handler = handler;
+    }
 }
 

@@ -8,7 +8,7 @@ public class InteractionManager implements Manager, Savable<Interaction> {
     private static InteractionManager INSTANCE;
     private List<Interaction> data;
     private FileUtils fileUtils;
-    private HandleUserInput handler = new HandleUserInput();
+    private HandleInput handler = new HandleInput();
     private static List<String> validPotential = new ArrayList<>(Arrays.asList("positive","negative","neutral"));
     private static List<String> validMeans = new ArrayList<>(Arrays.asList("phone", "email", "Facebook"));
     private InteractionManager() {
@@ -68,27 +68,27 @@ public class InteractionManager implements Manager, Savable<Interaction> {
         Interaction interaction = new Interaction();
         System.out.println("Create new interaction: ");
 
-        interaction.setLead(handler.enterLeadId("Lead's id", false));
         interaction.setDate(handler.enterDate("Interaction's date", false));
-        interaction.setPotential(handler.enterSpecificString("Interaction's potential", validPotential, false));
+        interaction.setLead(handler.enterLeadId("Lead's id", true));
         interaction.setMeans( handler.enterSpecificString("Interaction's means", validMeans,false));
+        interaction.setPotential(handler.enterSpecificString("Interaction's potential", validPotential, false));
         interaction.generateId(lastItemId());
 
-        System.out.println(interaction);
+        System.out.println("Added! " + interaction);
         data.add(interaction);
         saveToFile();
     }
 
     @Override
     public void update() throws  NullPointerException {
-        String id = handler.enterInteractionId("interaction's id you wish to update", false);
+        String id = handler.enterInteractionId("interaction's id you want to update", false);
         Interaction interaction = this.findElement(id);
         int i = this.findIndex(id);
 
-        interaction.setLead(handler.enterLeadId("Lead's id", true));
         interaction.setDate(handler.enterDate("Interaction's date", true));
-        interaction.setPotential(handler.enterSpecificString("Interaction's potential", validPotential, true));
+        interaction.setLead(handler.enterLeadId("Lead's id", true));
         interaction.setMeans( handler.enterSpecificString("Interaction's means", validMeans,true));
+        interaction.setPotential(handler.enterSpecificString("Interaction's potential", validPotential, true));
 
         data.set(i, interaction);
 
@@ -98,7 +98,7 @@ public class InteractionManager implements Manager, Savable<Interaction> {
 
     @Override
     public void delete() throws NullPointerException {
-        String id = handler.enterInteractionId("interaction's id you wish to update", false);
+        String id = handler.enterInteractionId("interaction's id you want to delete", false);
         int i = this.findIndex(id);
         data.remove(i);
         System.out.println("deleted!");
@@ -138,11 +138,11 @@ public class InteractionManager implements Manager, Savable<Interaction> {
         return Integer.parseInt(currentId.substring(currentId.length() - 3));
     }
 
-    public HandleUserInput getHandler() {
+    public HandleInput getHandler() {
         return handler;
     }
 
-    public void setHandler(HandleUserInput handler) {
+    public void setHandler(HandleInput handler) {
         this.handler = handler;
     }
 }

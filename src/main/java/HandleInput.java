@@ -3,13 +3,15 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-public class HandleUserInput {
+public class HandleInput {
     private Scanner console = new Scanner(System.in);
     boolean isInvalid;
     String input;
 
-    public HandleUserInput(){}
+    public HandleInput(){}
 
     public String getInput(String message, boolean leaveBlank){
         boolean isInvalid;
@@ -19,9 +21,10 @@ public class HandleUserInput {
             input = console.nextLine();
             if(input.equals("") && !leaveBlank){
                 isInvalid = true;
+                System.out.println("invalid input");
             }
         } while (isInvalid);
-        return input;
+        return input.trim();
     }
 
     public String enterString(String message, boolean leaveBlank){
@@ -98,16 +101,62 @@ public class HandleUserInput {
         return id;
     }
 
-    public String enterPhone(){
-        return "";
+
+    public String enterPhone(String message, boolean leaveBlank){
+        String phone;
+        do {
+            isInvalid = false;
+            phone = getInput(message,leaveBlank);
+            if(input.equals("") && leaveBlank) {
+                break;
+            }
+            if (!(phone.length() == 10 && phone.charAt(0) == '0')){
+                isInvalid = true;
+            }
+
+        } while (isInvalid);
+
+        return phone;
     }
 
-    public String enterEmail(){
-        return "";
+    public String enterEmail(String message, boolean leaveBlank){
+        String email;
+        String regex = "^\\w+[a-zA-Z0-9]*@\\w+[a-z].\\w+[a-z]$";
+        do {
+            isInvalid = false;
+            email = getInput(message,leaveBlank);
+            if(input.equals("") && leaveBlank) {
+                break;
+            }
+            Pattern pattern = Pattern.compile(regex);
+            Matcher matcher = pattern.matcher(email);
+            if (!matcher.find()){
+                isInvalid = true;
+            }
+
+        } while (isInvalid);
+
+        return email;
     }
 
-    public String enterGender(){
-        return "";
+    public boolean enterGender(String message, boolean leaveBlank){
+        String genderString;
+        boolean gender = false;
+        do {
+            isInvalid = false;
+            genderString = getInput(message,leaveBlank);
+            if(input.equals("") && leaveBlank) {
+                break;
+            }
+            if (genderString.equalsIgnoreCase("M")){
+                gender = true;
+            } else if (genderString.equalsIgnoreCase("F")){
+                gender = false;
+            } else
+                isInvalid = true;
+        } while (isInvalid);
+
+        return gender;
     }
 }
 

@@ -1,5 +1,7 @@
 import com.opencsv.bean.CsvBindByName;
 import com.opencsv.bean.CsvDate;
+
+import java.text.SimpleDateFormat;
 import java.util.*;
 public class Lead{
 
@@ -27,11 +29,12 @@ public class Lead{
 
     @Override
     public String toString() {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         return "Lead{" +
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
                 ", gender=" + gender +
-                ", dob=" + dob +
+                ", dob=" + sdf.format(dob) +
                 ", email='" + email + '\'' +
                 ", phone='" + phone + '\'' +
                 ", address='" + address + '\'' +
@@ -76,7 +79,7 @@ public class Lead{
     }
 
     public void setName(String name) {
-        this.name = (!name.equals("-") ? name: this.name);
+        this.name = (!name.equals("") ? name: this.name);
     }
 
     public Date getDob() {
@@ -92,7 +95,7 @@ public class Lead{
     }
 
     public void setEmail(String email) {
-        this.email = (!email.equals("-") ? email: this.email);
+        this.email = (!email.equals("") ? email: this.email);
     }
 
     public String getPhone() {
@@ -100,7 +103,7 @@ public class Lead{
     }
 
     public void setPhone(String phone) {
-        this.phone = (!phone.equals("-") ? phone: this.phone);
+        this.phone = (!phone.equals("") ? phone: this.phone);
     }
 
     public String getAddress() {
@@ -108,7 +111,7 @@ public class Lead{
     }
 
     public void setAddress(String address) {
-        this.address = (!address.equals("-") ? address: this.address);
+        this.address = (!address.equals("") ? address: this.address);
     }
 
 
