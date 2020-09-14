@@ -16,7 +16,7 @@ public class StatsReport {
         System.out.println("1. Reporting Lead by group age");
         System.out.println("2. Reporting interactions by month");
         System.out.println("3. Reporting interaction by potential");
-        System.out.println("*************************************");
+        System.out.println("-----");
         System.out.println("Enter your choice (from 1 to 3):");
         String answer = console.nextLine();
         switch (answer) {
@@ -40,18 +40,15 @@ public class StatsReport {
         int group2 = 0; //10-20
         int group3 = 0; //20-60
         int group4 = 0; //60+
-        for (int i = 0; i < 10; i++){
-            System.out.println(" Person " + (i + 1) + " : " + leads.get(i).getAge());
-        }
 
-        for (int i = 0; i < leads.size(); i++){
-            if(leads.get(i).getAge() <= 10){
+        for (Lead lead : leads) {
+            if (lead.getAge() <= 10) {
                 group1++;
-            } else if(leads.get(i).getAge() > 10 && leads.get(i).getAge() <= 20){
+            } else if (lead.getAge() > 10 && lead.getAge() <= 20) {
                 group2++;
-            } else if(leads.get(i).getAge() > 20 && leads.get(i).getAge() <= 60){
+            } else if (lead.getAge() > 20 && lead.getAge() <= 60) {
                 group3++;
-            } else if (leads.get(i).getAge() > 60){
+            } else if (lead.getAge() > 60) {
                 group4++;
             }
         }
@@ -62,36 +59,15 @@ public class StatsReport {
         System.out.println("Group 60+: " + group4);
     }
 
-    public Date[] inputStartEndDate(){
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        Scanner input = new Scanner(System.in);
-        System.out.print("Enter the beginning date: ");
-        String bDate = input.nextLine();
-        Date startDate = null;
-        try {
-            startDate = sdf.parse(bDate);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        System.out.print("Enter the ending date: ");
-        String eDate = input.nextLine();
-        Date endDate = null;
-        try {
-            endDate = sdf.parse(eDate);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        Date[] dateArray =  {startDate, endDate};
-        return dateArray;
-    }
-
     public void InteractionByPotential(List<Interaction> interactions){
-        Date[] DateArray = inputStartEndDate();
+        Date[] dates = this.enterStartEndDate();
+        Date startDate = dates[0];
+        Date endDate = dates[1];
         int positiveCount = 0;
         int negativeCount = 0;
         int neutralCount = 0;
         for (Interaction interaction : interactions) {
-            if (interaction.getDate().after(DateArray[0]) && interaction.getDate().before(DateArray[1])) {
+            if (interaction.getDate().after(startDate) && interaction.getDate().before(endDate)) {
                 switch (interaction.getPotential()) {
                     case "positive":
                         positiveCount++;
@@ -112,23 +88,24 @@ public class StatsReport {
 
 
     public void InteractionByMonth(List<Interaction> interactions){
-        Date[] DateArray = inputStartEndDate();
+        Date[] dates = this.enterStartEndDate();
+        Date startDate = dates[0];
+        Date endDate = dates[1];
         SimpleDateFormat sdf = new SimpleDateFormat("MMM-yyyy");
         String[] dateString = new String[interactions.size()];
         int trueSize = 0;
         for (Interaction interaction : interactions) {
             Date date = interaction.getDate();
-            if (date.after(DateArray[0]) && date.before(DateArray[1])) {
+            if (date.after(startDate) && date.before(endDate)) {
                 dateString[trueSize]  = sdf.format(date);
                 trueSize++;
             }
         }
-
         int[] countArray = new int[trueSize];
         int visited = -1;
         for(int i = 0; i < trueSize-1; i++){
             int count = 1;
-            for(int j = i+1; j < trueSize -1; j++){
+            for(int j = i+1; j < trueSize; j++){
                 if(dateString[i].equals(dateString[j])){
                     count++;
                     countArray[j] = visited;
@@ -137,11 +114,28 @@ public class StatsReport {
             if(countArray[i] != visited)
                 countArray[i] = count;
         }
-
+        System.out.println("Result: ");
         for(int i = 0; i < trueSize - 1; i++){
             if(countArray[i] != visited)
-                System.out.println("    " + dateString[i] + "    |    " + countArray[i]);
+                System.out.println("\t" + dateString[i] + "\t|\t" + countArray[i]);
         }
+    }
+
+    public Date[] enterStartEndDate(){
+        boolean isInvalid;
+        Date startDate;
+        Date endDate;
+        do {
+            isInvalid = false;
+            HandleInput handler= new HandleInput();
+            startDate = handler.enterDate("start date ", false);
+            endDate = handler.enterDate("end date", false);
+            if (startDate.after(endDate)){
+                isInvalid = true;
+                System.out.println("start date must be before the end date");
+            }
+        } while (isInvalid);
+        return new Date[]{startDate, endDate};
     }
 
 }
