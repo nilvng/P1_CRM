@@ -51,9 +51,10 @@ public class HandleInput {
 
     public Date enterDate(String message, boolean leaveBlank){
         Date dateInput = null;
+        String fomat = " (yyyy-MM-dd)";
         do {
             isInvalid = false;
-            input = getInput(message,leaveBlank);
+            input = getInput(message + fomat,leaveBlank);
             if(input.equals("") && leaveBlank) {
                 break;
             }
@@ -61,6 +62,7 @@ public class HandleInput {
                 dateInput  = new SimpleDateFormat("yyyy-MM-dd").parse(input);
             } catch (ParseException e) {
                 isInvalid = true;
+                System.out.println("invalid input, please enter again");
             }
         } while (isInvalid);
         return dateInput;
