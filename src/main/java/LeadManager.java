@@ -1,9 +1,8 @@
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LeadManager implements Manager, Savable<Lead>{
+public class LeadManager implements Manager, Savable<Lead> {
     private static LeadManager INSTANCE;
     private List<Lead> data;
     private FileUtils fileUtils;

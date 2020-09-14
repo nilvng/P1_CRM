@@ -1,4 +1,3 @@
-
 import com.opencsv.CSVWriter;
 import com.opencsv.bean.CsvToBeanBuilder;
 import com.opencsv.bean.StatefulBeanToCsv;
@@ -9,7 +8,7 @@ import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
 import java.io.*;
 import java.util.*;
 
-public class CsvUtils<T> implements FileUtils{
+public class CsvUtils<T> implements FileUtils {
     private String address;
     private Class<T> typeParameterClass;
     private Savable<T> manager;
