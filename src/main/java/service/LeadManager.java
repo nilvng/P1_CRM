@@ -1,3 +1,9 @@
+package service;
+
+import fileOperator.FileUtils;
+import domain.Lead;
+import util.HandleInput;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -80,6 +86,7 @@ public class LeadManager implements Manager, Savable<Lead> {
     public void update() throws  NullPointerException {
         String id = handler.enterLeadId("lead's id", false);
         Lead lead = this.findElement(id);
+        System.out.println("Here is the lead you will update" + lead);
         int i = this.findIndex(id);
         lead.setName(handler.enterString("lead's name:", true));
         lead.setDob(handler.enterDate("lead's dob:", true));

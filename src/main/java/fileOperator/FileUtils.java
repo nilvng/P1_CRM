@@ -1,5 +1,5 @@
+package fileOperator;
 import java.io.IOException;
-import java.util.List;
 
 public interface FileUtils {
     void fetchData() throws IOException;

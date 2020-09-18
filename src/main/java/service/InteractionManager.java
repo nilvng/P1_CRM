@@ -1,4 +1,8 @@
-//import Features.Interaction;
+package service;//import Features.Interaction;
+
+import fileOperator.FileUtils;
+import domain.Interaction;
+import util.HandleInput;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -84,6 +88,7 @@ public class InteractionManager implements Manager, Savable<Interaction> {
     public void update() throws  NullPointerException {
         String id = handler.enterInteractionId("interaction's id you want to update", false);
         Interaction interaction = this.findElement(id);
+        System.out.println("Here is the interaction you will update" + interaction);
         int i = this.findIndex(id);
 
         interaction.setDate(handler.enterDate("Interaction's date", true));

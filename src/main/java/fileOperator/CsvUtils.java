@@ -1,11 +1,16 @@
+package fileOperator;
+
+
 import com.opencsv.CSVWriter;
 import com.opencsv.bean.CsvToBeanBuilder;
 import com.opencsv.bean.StatefulBeanToCsv;
 import com.opencsv.bean.StatefulBeanToCsvBuilder;
 import com.opencsv.exceptions.CsvDataTypeMismatchException;
 import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
+import service.Savable;
 
 import java.io.*;
+
 import java.util.*;
 
 public class CsvUtils<T> implements FileUtils {
@@ -13,7 +18,7 @@ public class CsvUtils<T> implements FileUtils {
     private Class<T> typeParameterClass;
     private Savable<T> manager;
 
-    CsvUtils(String address, Class<T> typeParameterClass, Savable<T> manager) throws IOException {
+    public CsvUtils(String address, Class<T> typeParameterClass, Savable<T> manager) throws IOException {
         this.address = address;
         this.typeParameterClass = typeParameterClass;
         this.manager = manager;

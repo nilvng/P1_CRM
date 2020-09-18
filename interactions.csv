@@ -1,5 +1,5 @@
 DATE,ID,LEAD,MEANS,POTENTIAL
-2020-08-30,inter_001,lead_001,email,positive
+2021-06-06,inter_001,lead_001,email,positive
 2020-09-01,inter_002,lead_002,email,negative
 2020-09-05,inter_003,lead_001,phone,neutral
 2020-04-11,inter_004,lead_003,email,positive
@@ -8,8 +8,4 @@ DATE,ID,LEAD,MEANS,POTENTIAL
 2019-09-29,inter_007,lead_003,email,positive
 2019-09-01,inter_008,lead_004,email,positive
 2020-09-10,inter_009,lead_009,Facebook,neutral
-2010-06-27,inter_0010,lead_007,phone,neutral
-2020-09-01,inter_014,lead_001,phone,negative
-2020-09-01,inter_015,lead_001,phone,neutral
-2020-08-28,inter_016,lead_002,phone,positive
-2010-01-01,inter_017,lead_007,email,positive
+2010-06-27,inter_010,lead_007,phone,neutral

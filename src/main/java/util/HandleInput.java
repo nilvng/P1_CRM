@@ -1,3 +1,9 @@
+package util;
+
+import service.InteractionManager;
+import service.LeadManager;
+
+import java.lang.reflect.Method;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -8,10 +14,18 @@ import java.util.regex.Pattern;
 
 public class HandleInput {
     private Scanner console = new Scanner(System.in);
-    boolean isInvalid;
-    String input;
+    private boolean isInvalid;
+    private String input;
 
     public HandleInput(){}
+
+    public Scanner getConsole() {
+        return console;
+    }
+
+    public void setConsole(Scanner console) {
+        this.console = console;
+    }
 
     public String getInput(String message, boolean leaveBlank){
         boolean isInvalid;
@@ -42,8 +56,11 @@ public class HandleInput {
             if(input.equals("") && leaveBlank) {
                 break;
             }
-                if (!specificInput.contains(input)){
-                isInvalid = true;
+                if (specificInput.stream().noneMatch(input::equalsIgnoreCase)){
+                    isInvalid = true;
+                    System.out.print("Please enter one of these following values: ");
+                    specificInput.forEach(s -> System.out.print(s + " "));
+                    System.out.println();
             }
         } while (isInvalid);
         return input;

@@ -1,3 +1,5 @@
+package domain;
+
 
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -18,14 +20,7 @@ public class Interaction{
     @CsvBindByName
     private String potential;
 
-
-
-    public void createFromConsole(){
-
-        }
-
-    public void editFromConsole(){
-
+    public Interaction() {
     }
 
     public Interaction deepCopy(){

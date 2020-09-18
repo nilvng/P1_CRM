@@ -1,3 +1,8 @@
+import domain.Interaction;
+import domain.Lead;
+import fileOperator.CsvUtils;
+import service.*;
+
 import java.util.Scanner;
 
 
@@ -42,7 +47,7 @@ public class Main {
                         default:
                             System.out.println("Fail to manage anything");
                     }
-                    if (manager != null) management(console, manager);
+                    if (manager != null) managementMenu(console, manager);
                     break;
                 case "B":
                     statsReport.menu(console);
@@ -55,7 +60,7 @@ public class Main {
         } while (!input.equals("end"));
     }
 
-    public static void management(Scanner console, Manager manager){
+    public static void managementMenu(Scanner console, Manager manager){
         String input;
         do {
             System.out.println("You have 4 options as an manager, please type from 1 to 4 ");
